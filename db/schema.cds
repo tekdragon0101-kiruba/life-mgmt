@@ -21,7 +21,6 @@ entity LearningResources : managed {
     Status          : Association to Status; // Completed, In Progress, Not Started
     Tags            : Composition of many TagLabels
                           on Tags.resource = $self; // Searchable terms
-    AddedDate       : Timestamp; // When the resource was added
 }
 
 entity Tasks : managed {
