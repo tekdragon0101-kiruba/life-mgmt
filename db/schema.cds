@@ -61,22 +61,23 @@ entity TagLabels : cuid {
 @cds.odata.valuelist
 @cds.autoexpose
 entity Priority {
-    key code : String(1) @assert.range enum {
+    key code  : String(1) @assert.range enum {
             Low = 'L';
             Medium = 'M';
             High = 'H';
             Critical = 'C';
         } default #Medium;
-        desr : String(10);
+        descr : String(10);
 }
 
 @cds.odata.valuelist
 @cds.autoexpose
 entity Status {
-    key code : String(1) enum {
+    key code  : String(1) @assert.range enum {
             In_progress = 'I';
             Completed = 'C';
             Not_started = 'N';
-        }
-        desr : String(20);
+            On_hold = 'H'
+        } default #Not_started;
+        descr : String(20);
 }
