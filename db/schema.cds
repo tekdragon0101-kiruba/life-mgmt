@@ -24,7 +24,7 @@ entity LearningResources : managed {
 }
 
 entity Tasks : managed {
-    key TaskID            : Decimal(3, 2); // Unique identifier
+    key TaskID            : Decimal(3, 2) @readonly; // Unique identifier
         Title             : String(255); // Brief name of the task
         Description       : String(1000) @UI.MultiLineText; // Detailed task explanation
         AssignedTo        : String(255); // Person or team responsible
