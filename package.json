@@ -14,6 +14,25 @@
     "@cap-js/cds-types": "^0.10.0"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "dev-mock": "cds watch --profile dev"
+  },
+  "cds": {
+    "[dev]": {
+      "requires": {
+        "db": {
+          "kind": "sqlite",
+          "url": "db.sqlite"
+        },
+        "auth": {
+          "kind": "mocked",
+          "users": {
+            "karan": {
+              "password": "karan123"
+            }
+          }
+        }
+      }
+    }
   }
 }
