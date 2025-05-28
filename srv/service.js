@@ -1,4 +1,5 @@
 const cds = require('@sap/cds')
+const fs = require('fs');
 
 module.exports = class LifeMgmtService extends cds.ApplicationService {
   async init() {
@@ -8,7 +9,7 @@ module.exports = class LifeMgmtService extends cds.ApplicationService {
 
     this.on('READ', Categories, async (req) => {
       const { Categories } = this.rewardService.entities;
-      const result = await this.rewardService.run(SELECT.from(Categories));
+      const result = await this.rewardService.run(req.query);
       console.log("after result", result);
       return result;
     })
@@ -54,8 +55,8 @@ module.exports = class LifeMgmtService extends cds.ApplicationService {
       console.log('On editFormat', req.data, req.params);
       const name = req.data.newName[0].toUpperCase() + req.data.newName.slice(1, req.data.newName.length).toLowerCase();
       await INSERT.into(Format).entries({ name: name });
-      await DELETE.from(Format).where({name: req.data.name});
-      await UPDATE(LearningResources.drafts).set({Format_name: name}).where(req.params[0]);
+      await DELETE.from(Format).where({ name: req.data.name });
+      await UPDATE(LearningResources.drafts).set({ Format_name: name }).where(req.params[0]);
       req.notify("Format updated Successfully");
     })
     this.on('deleteFormat', async (req) => {

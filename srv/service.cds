@@ -89,6 +89,7 @@ annotate LifeMgmtService with @path: '/life-mgmt';
 annotate LifeMgmtService with @requires: 'authenticated-user';
 
 annotate LifeMgmtService.Categories with {
-    Name        @Common.Label: 'Category Name';
-    Description @Common.Label: 'Category Description'
+    ID           @Common.Label: 'ID'                    @UI.HiddenFilter;
+    Name         @Common.Label: 'Category Name';
+    Description  @Common.Label: 'Category Description'  @UI.HiddenFilter;
 };
