@@ -1,4 +1,4 @@
-namespace com.gofarward;
+namespace com.goforward;
 
 using {
     cuid,
@@ -8,17 +8,18 @@ using {
 
 entity LearningResources : managed {
     key ResourceID      : UUID; // Unique identifier
-        Title           : String(255); // Name of the learning material
+        Title           : String(255)                    @mandatory; // Name of the learning material
         Category        : String(100); // Type (e.g., book, video, article, course)
         Subject         : String(1000)                   @UI.MultiLineText; // Topic or field covered
-        AuthorSource    : String(255); // Creator or provider
+        AuthorSource    : String(255)                    @mandatory; // Creator or provider
         PublicationDate : Date; // Date when it was published
-        AccessLink      : String(500); // URL or location where it can be found
-        Format          : String(50); // Medium (e.g., PDF, online course, book)
-        Duration        : Integer;
+        AccessLink      : String(500)                    @mandatory; // URL or location where it can be found
+        Format          : Association to Format; // Medium (e.g., PDF, online course, book)
+        Time            : Association to TimeUnits       @mandatory;
+        Duration        : Integer                        @mandatory;
         Description     : String                         @UI.MultiLineText; // Short summary explaining the resource
         DifficultyLevel : Association to DifficultyLevel @mandatory;
-        Status          : Association to Status; //String(20) default 'Not Started'; // Completed, In Progress, Not Started
+        Status          : Association to Status          @mandatory; // Completed, In Progress, Not Started
         Tags            : Composition of many TagLabelResources
                               on Tags.resource = $self; // Searchable terms
 }
@@ -29,7 +30,7 @@ entity Tasks : managed {
         Description       : String(1000)             @UI.MultiLineText; // Detailed task explanation
         AssignedTo        : String(255)              @readonly  @cds.on.insert: $user; // Person or team responsible
         PriorityLevel     : Association to Priority  @mandatory; // Low, Medium, High, Critical
-        Status            : Association to Status; //String(20) default 'Not Started'; // Not Started, In Progress, Completed, On Hold, Overdue
+        Status            : Association to Status; // Not Started, In Progress, Completed, On Hold, Overdue
         StartDate         : DateTime default $now    @mandatory; // When the task begins
         DueDate           : DateTime                 @mandatory; // Deadline for completion
         CompletionDate    : DateTime; // Date when finished
@@ -49,8 +50,38 @@ entity Tasks : managed {
 
 @cds.odata.valuelist
 @cds.autoexpose
+entity Format {
+    key name : String(50) @title: '{i18n>formatName}';
+}
+
+@cds.odata.valuelist
+@cds.autoexpose
+entity TimeUnits {
+    key unit : String(10) @title: '{i18n>unit}' enum {
+            Hours;
+            Minutes;
+            Seconds;
+            Days;
+            Weeks;
+            Months;
+            Years;
+        } default #Hours;
+}
+
+annotate LearningResources with {
+    Time   @Common: {ValueListWithFixedValues, };
+    Format @Common: {ValueListWithFixedValues, };
+};
+
+
+@cds.odata.valuelist
+@cds.autoexpose
 entity DifficultyLevel {
-    key levelName : String(20);
+    key levelName : String(20) enum {
+            Beginner;
+            Intermediate;
+            Advanced
+        } default #Beginner;
 }
 
 @cds.odata.valuelist

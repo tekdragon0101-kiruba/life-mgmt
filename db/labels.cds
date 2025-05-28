@@ -1,4 +1,4 @@
-using {com.gofarward as db} from './schema';
+using {com.goforward as db} from './schema';
 
 annotate db.LearningResources with {
     ResourceID      @title: '{i18n>ResourceID}';

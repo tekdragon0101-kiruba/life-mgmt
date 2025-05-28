@@ -128,7 +128,7 @@ annotate service.Tasks with {
             CollectionPath: 'Status',
             Parameters    : [
                 {
-                    $Type            : 'Common.ValueListParameterInOut',
+                    $Type            : 'Common.ValueListParameterIn',
                     LocalDataProperty: Status_code,
                     ValueListProperty: 'code',
                 },

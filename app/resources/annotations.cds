@@ -1,4 +1,6 @@
 using LifeMgmtService as service from '../../srv/service';
+using from '../../db/schema';
+
 
 annotate service.LearningResources with @(
     UI                                : {
@@ -14,9 +16,12 @@ annotate service.LearningResources with @(
             {Value: Subject},
             {Value: AuthorSource},
             {Value: PublicationDate},
-            {Value: AccessLink},
-            {Value: Format},
-            {Value: Duration},
+            {
+                $Type: 'UI.DataFieldWithUrl',
+                Value: AccessLink,
+                Url  : AccessLink,
+            },
+            {Value: Format_name},
             {Value: Description},
             {Value: DifficultyLevel_levelName},
             {Value: Status_code},
@@ -58,31 +63,57 @@ annotate service.LearningResources with @(
             {Value: Subject},
             {Value: AuthorSource},
             {Value: PublicationDate},
-            {Value: AccessLink},
-            {Value: Format},
+            {
+                $Type: 'UI.DataFieldWithUrl',
+                Value: AccessLink,
+                Url  : AccessLink,
+            },
+            {Value: Format_name},
+
+            {
+                Value: Time_unit,
+                Label: 'Time Unit'
+            },
             {Value: Duration},
             {Value: Description},
             {Value: DifficultyLevel_levelName},
             {Value: Status_code},
-            {Value: Tags.name}
+            {Value: Tags.name},
+            {
+                $Type : 'UI.DataFieldForAction',
+                Action : 'LifeMgmtService.createFormat',
+                Label : '{i18n>createFormat}',
+            },
+            {
+                $Type : 'UI.DataFieldForAction',
+                Action : 'LifeMgmtService.editFormat',
+                Label : '{i18n>editFormat}',
+            },
+            {
+                $Type : 'UI.DataFieldForAction',
+                Action : 'LifeMgmtService.deleteFormat',
+                Label : '{i18n>deleteFormat}',
+            },
+
         ],
     },
 );
+
 annotate service.LearningResources with {
-    DifficultyLevel @(Common.ValueList : {
-            $Type : 'Common.ValueListType',
-            CollectionPath : 'DifficultyLevel',
-            Parameters : [
-                {
-                    $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : DifficultyLevel_levelName,
-                    ValueListProperty : 'levelName',
-                },
-            ],
-            Label : '{i18n>DifficultyLevel1}',
+    DifficultyLevel @(
+        Common.ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'DifficultyLevel',
+            Parameters    : [{
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: DifficultyLevel_levelName,
+                ValueListProperty: 'levelName',
+            }, ],
+            Label         : '{i18n>DifficultyLevel1}',
         },
-        Common.ValueListWithFixedValues : true
-)};
+        Common.ValueListWithFixedValues: true
+    )
+};
 
 annotate service.LearningResources with {
     Status @(
@@ -103,9 +134,9 @@ annotate service.LearningResources with {
             Label         : '{i18n>Status1}',
         },
         Common.ValueListWithFixedValues: true,
-        Common.Text : {
-            $value : Status.descr,
-            ![@UI.TextArrangement] : #TextFirst,
+        Common.Text                    : {
+            $value                : Status.descr,
+            ![@UI.TextArrangement]: #TextFirst,
         },
     )
 };
