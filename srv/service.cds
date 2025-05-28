@@ -1,6 +1,7 @@
 using {com.goforward as db} from '../db/schema';
 using {RewardsMgmtService as external} from './external/RewardsMgmtService';
 
+
 service LifeMgmtService {
     aspect inFormat {
         name : String(50) @mandatory;
@@ -85,7 +86,11 @@ service LifeMgmtService {
 
 }
 
-annotate LifeMgmtService with @path: '/life-mgmt';
+annotate LifeMgmtService with @protocol: [{
+    kind: 'odata',
+    path: '/life-mgmt'
+} /* ,{kind: 'rest', path:'/rest/life-mgmt'} */];
+
 annotate LifeMgmtService with @requires: 'authenticated-user';
 
 annotate LifeMgmtService.Categories with {

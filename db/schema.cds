@@ -8,18 +8,18 @@ using {
 
 entity LearningResources : managed {
     key ResourceID      : UUID; // Unique identifier
-        Title           : String(255)                     @mandatory; // Name of the learning material
-        Category        : String(100); // Type (e.g., book, video, article, course)
-        Subject         : String(1000)                    @UI.MultiLineText; // Topic or field covered
-        AuthorSource    : String(255)                     @mandatory; // Creator or provider
+        Title           : String(255)                     @mandatory; 
+        Category        : String(100); 
+        Subject         : String(1000)                    @UI.MultiLineText;
+        AuthorSource    : String(255)                     @mandatory; 
         PublicationDate : Date; // Date when it was published
-        AccessLink      : String(500)                     @mandatory; // URL or location where it can be found
+        AccessLink      : String(500)                     @mandatory; 
         Format          : Association to Format           @assert.target; // Medium (e.g., PDF, online course, book)
         Time            : Association to TimeUnits        @mandatory  @assert.target;
         Duration        : Integer                         @mandatory;
-        Description     : String                          @UI.MultiLineText; // Short summary explaining the resource
+        Description     : String                          @UI.MultiLineText; 
         DifficultyLevel : Association to DifficultyLevel  @mandatory  @assert.target;
-        Status          : Association to Status           @mandatory  @assert.target; // Completed, In Progress, Not Started
+        Status          : Association to Status           @mandatory  @assert.target;
         Tags            : Composition of many TagLabelResources
                               on Tags.resource = $self; // Searchable terms
 }

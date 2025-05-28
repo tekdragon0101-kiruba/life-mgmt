@@ -10,7 +10,7 @@ module.exports = class LifeMgmtService extends cds.ApplicationService {
     this.on('READ', Categories, async (req) => {
       const { Categories } = this.rewardService.entities;
       const result = await this.rewardService.run(req.query);
-      console.log("after result", result);
+      // console.log("after result", result);
       return result;
     })
 
