@@ -5,7 +5,7 @@ annotate service.LearningResources with @(
         SelectionFields     : [
             Title,
             Category,
-            Status,
+            Status_code,
             Tags.name
         ],
         LineItem            : [
@@ -19,7 +19,7 @@ annotate service.LearningResources with @(
             {Value: Duration},
             {Value: Description},
             {Value: DifficultyLevel_levelName},
-            {Value: Status},
+            {Value: Status_code},
             {Value: Tags.name}
         ],
         HeaderInfo          : {
@@ -63,7 +63,7 @@ annotate service.LearningResources with @(
             {Value: Duration},
             {Value: Description},
             {Value: DifficultyLevel_levelName},
-            {Value: Status},
+            {Value: Status_code},
             {Value: Tags.name}
         ],
     },
@@ -92,7 +92,7 @@ annotate service.LearningResources with {
             Parameters    : [
                 {
                     $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: Status,
+                    LocalDataProperty: Status_code,
                     ValueListProperty: 'code',
                 },
                 {
@@ -103,5 +103,9 @@ annotate service.LearningResources with {
             Label         : '{i18n>Status1}',
         },
         Common.ValueListWithFixedValues: true,
+        Common.Text : {
+            $value : Status.descr,
+            ![@UI.TextArrangement] : #TextFirst,
+        },
     )
 };

@@ -18,7 +18,7 @@ entity LearningResources : managed {
         Duration        : Integer;
         Description     : String                         @UI.MultiLineText; // Short summary explaining the resource
         DifficultyLevel : Association to DifficultyLevel @mandatory;
-        Status          : String(20) default 'Not Started'; // Completed, In Progress, Not Started
+        Status          : Association to Status; //String(20) default 'Not Started'; // Completed, In Progress, Not Started
         Tags            : Composition of many TagLabelResources
                               on Tags.resource = $self; // Searchable terms
 }
@@ -29,7 +29,7 @@ entity Tasks : managed {
         Description       : String(1000)             @UI.MultiLineText; // Detailed task explanation
         AssignedTo        : String(255)              @readonly  @cds.on.insert: $user; // Person or team responsible
         PriorityLevel     : Association to Priority  @mandatory; // Low, Medium, High, Critical
-        Status            : String(20) default 'Not Started'; // Not Started, In Progress, Completed, On Hold, Overdue
+        Status            : Association to Status; //String(20) default 'Not Started'; // Not Started, In Progress, Completed, On Hold, Overdue
         StartDate         : DateTime default $now    @mandatory; // When the task begins
         DueDate           : DateTime                 @mandatory; // Deadline for completion
         CompletionDate    : DateTime; // Date when finished

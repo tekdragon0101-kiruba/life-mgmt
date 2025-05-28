@@ -6,7 +6,7 @@ annotate service.Tasks with @(UI: {
     SelectionFields     : [
         Title,
         PriorityLevel_code,
-        Status,
+        Status_code,
         Tags.name
     ],
     LineItem            : [
@@ -14,7 +14,7 @@ annotate service.Tasks with @(UI: {
         {Value: Description},
         {Value: AssignedTo},
         {Value: PriorityLevel_code},
-        {Value: Status},
+        {Value: Status_code},
         {Value: StartDate},
         {Value: DueDate},
         {Value: CompletionDate},
@@ -58,7 +58,7 @@ annotate service.Tasks with @(
             {Value: Description, },
             {Value: AssignedTo, },
             {Value: PriorityLevel_code, },
-            {Value: Status, },
+            {Value: Status_code, },
             {Value: StartDate, },
             {Value: DueDate, },
             {Value: CompletionDate, },
@@ -129,7 +129,7 @@ annotate service.Tasks with {
             Parameters    : [
                 {
                     $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: Status,
+                    LocalDataProperty: Status_code,
                     ValueListProperty: 'code',
                 },
                 {
@@ -140,13 +140,9 @@ annotate service.Tasks with {
             Label         : '{i18n>Status1}',
         },
         Common.ValueListWithFixedValues: true,
+        Common.Text : {
+            $value : Status.descr,
+            ![@UI.TextArrangement] : #TextFirst,
+        },
     )
 };
-
-annotate service.Status with {
-    code @Common.Text : {
-        $value : descr,
-        ![@UI.TextArrangement] : #TextFirst,
-    }
-};
-
