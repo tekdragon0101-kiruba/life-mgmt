@@ -1,0 +1,1 @@
+using LifeMgmtService as service from '../../srv/service';

@@ -6,9 +6,8 @@ service LifeMgmtService {
 
     @odata.draft.enabled
     entity LearningResources as projection on db.LearningResources;
-
-    @odata.draft.enabled: false
-    entity Tags              as projection on db.TagLabels;
+    entity TaskTags              as projection on db.TagLabelTasks ;
+    entity ResourceTags              as projection on db.TagLabelResources;
 }
 
 annotate LifeMgmtService with @path: '/life-mgmt';

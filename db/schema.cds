@@ -19,42 +19,52 @@ entity LearningResources : managed {
     Description     : String       @UI.MultiLineText; // Short summary explaining the resource
     DifficultyLevel : String(20); // Beginner, Intermediate, Advanced
     Status          : Association to Status; // Completed, In Progress, Not Started
-    Tags            : Composition of many TagLabels
+    Tags            : Composition of many TagLabelResources
                           on Tags.resource = $self; // Searchable terms
 }
 
 entity Tasks : managed {
-    key TaskID            : Decimal(3, 2) @readonly; // Unique identifier
-        Title             : String(255); // Brief name of the task
-        Description       : String(1000) @UI.MultiLineText; // Detailed task explanation
-        AssignedTo        : String(255); // Person or team responsible
-        PriorityLevel     : Association to Priority; // Low, Medium, High, Critical
-        Status            : Association to Status; // Not Started, In Progress, Completed, On Hold
-        StartDate         : Date; // When the task begins
-        DueDate           : Date; // Deadline for completion
-        CompletionDate    : Date; // Date when finished
+    key TaskID            : UUID; // Unique identifier
+        Title             : String(255)             @mandatory; // Brief name of the task
+        Description       : String(1000)            @UI.MultiLineText; // Detailed task explanation
+        AssignedTo        : String(255)             @readonly  @cds.on.insert: $user; // Person or team responsible
+        PriorityLevel     : Association to Priority @mandatory; // Low, Medium, High, Critical
+        Status            : Association to Status; // Not Started, In Progress, Completed, On Hold, Overdue
+        StartDate         : DateTime default $now   @mandatory; // When the task begins
+        DueDate           : DateTime                @mandatory; // Deadline for completion
+        CompletionDate    : DateTime; // Date when finished
         EstimatedDuration : Integer; // Expected time (in hours or days)
         ActualDuration    : Integer; // Time actually spent
-        TaskType          : String(100); // Categorization (Development, Research, Review)
-        Tags              : Composition of many TagLabels
+        TaskType          : String(50)              @mandatory; // Categorization (Development, Research, Review)
+        Tags              : Composition of many TagLabelTasks
                                 on Tags.task = $self;
-        CommentsNotes     : String(1000);
-        Dependencies      : Association to Tasks;
-        parentTask        : Association to Tasks;
-        subtasks          : Composition of many Tasks
-                                on subtasks.parentTask = $self;
+        CommentsNotes     : String(1000)            @UI.MultiLineText;
+// Dependencies      : Association to Tasks;
+// parentTask        : Association to Tasks;
+// subtasks          : Composition of many Tasks
+//                         on subtasks.parentTask = $self;
 }
 
 
 /* Value Help Entities */
+entity TaskTypes {
+    key Typename : String(50);
+        descr    : String(500);
+}
+
 
 @assert.unique: {name: [
     ID,
     name
 ], }
-entity TagLabels : cuid {
+entity TagLabelTasks : cuid {
+    name : String(255);
+    task : Association to Tasks;
+
+}
+
+entity TagLabelResources : cuid {
     name     : String(255);
-    task     : Association to Tasks;
     resource : Association to LearningResources;
 }
 
@@ -77,7 +87,8 @@ entity Status {
             In_progress = 'I';
             Completed = 'C';
             Not_started = 'N';
-            On_hold = 'H'
+            On_hold = 'H';
+            Overdue = 'O';
         } default #Not_started;
         descr : String(20);
 }
