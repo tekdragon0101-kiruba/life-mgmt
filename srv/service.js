@@ -37,7 +37,7 @@ module.exports = class LifeMgmtService extends cds.ApplicationService {
     })
 
     this.on('createFormat', async (req) => {
-      console.log('On createFormat', req.data);
+      console.log('On createFormat', req.data, req.params);
       const name = req.data.name[0].toUpperCase() + req.data.name.slice(1, req.data.name.length).toLowerCase();
       await INSERT.into(Format).entries({ name: name });
       req.notify("Format created Successfully");

@@ -23,6 +23,10 @@ annotate service.LearningResources with @(
             },
             {Value: Format_name},
             {Value: Description},
+            {
+                Value: TimeDuration,
+                Label: 'Time Duration'
+            },
             {Value: DifficultyLevel_levelName},
             {Value: Status_code},
             {Value: Tags.name}
@@ -71,29 +75,42 @@ annotate service.LearningResources with @(
             {Value: Format_name},
 
             {
-                Value: Time_unit,
-                Label: 'Time Unit'
+                Value     : Time_unit,
+                Label     : 'Time Unit',
+                @UI.Hidden: IsActiveEntity,
             },
-            {Value: Duration},
+            {
+                Value     : Duration,
+                @UI.Hidden: IsActiveEntity,
+            },
+            {
+                Value     : TimeDuration,
+                @UI.Hidden: {$edmJson: {$Not: {$Path: 'IsActiveEntity'}}},
+                Label     : 'Time Duration'
+            },
             {Value: Description},
             {Value: DifficultyLevel_levelName},
             {Value: Status_code},
             {Value: Tags.name},
             {
-                $Type : 'UI.DataFieldForAction',
-                Action : 'LifeMgmtService.createFormat',
-                Label : '{i18n>createFormat}',
+                $Type     : 'UI.DataFieldForAction',
+                Action    : 'LifeMgmtService.createFormat',
+                Label     : '{i18n>createFormat}',
+                @UI.Hidden: IsActiveEntity,
             },
             {
-                $Type : 'UI.DataFieldForAction',
-                Action : 'LifeMgmtService.editFormat',
-                Label : '{i18n>editFormat}',
+                $Type     : 'UI.DataFieldForAction',
+                Action    : 'LifeMgmtService.editFormat',
+                Label     : '{i18n>editFormat}',
+                @UI.Hidden: IsActiveEntity,
             },
             {
-                $Type : 'UI.DataFieldForAction',
-                Action : 'LifeMgmtService.deleteFormat',
-                Label : '{i18n>deleteFormat}',
+                $Type     : 'UI.DataFieldForAction',
+                Action    : 'LifeMgmtService.deleteFormat',
+                Label     : '{i18n>deleteFormat}',
+                @UI.Hidden: IsActiveEntity,
             },
+
 
         ],
     },

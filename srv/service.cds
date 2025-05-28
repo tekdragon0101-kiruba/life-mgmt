@@ -2,7 +2,7 @@ using {com.goforward as db} from '../db/schema';
 
 service LifeMgmtService {
     aspect inFormat {
-        name : String(50);
+        name : String(50) @mandatory;
     };
 
     @odata.draft.enabled
@@ -12,7 +12,13 @@ service LifeMgmtService {
         };
 
             @odata.draft.enabled
-    entity LearningResources as projection on db.LearningResources
+    entity LearningResources as
+        projection on db.LearningResources {
+            *,
+            concat(
+                Duration, ' ', Time.unit
+            ) as TimeDuration : String(20)
+        }
         actions {
 
             @Common.SideEffects: {
@@ -46,7 +52,7 @@ service LifeMgmtService {
             },
                               newName : inFormat : name @title: '{i18n>newFormatName}' );
 
-            @Common.SideEffects: {
+            @Common.SideEffects             : {
                 $Type           : 'Common.SideEffectsType',
                 TargetProperties: ['/LifeMgmtService.EntityContainer/LearningResources/Format', ],
                 TargetEntities  : ['/LifeMgmtService.EntityContainer/Format']
