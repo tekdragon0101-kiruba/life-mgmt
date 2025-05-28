@@ -6,12 +6,15 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@sap-cloud-sdk/connectivity": "^3",
+    "@sap-cloud-sdk/http-client": "^3",
+    "@sap-cloud-sdk/resilience": "^3.26.4",
     "@sap/cds": "^8",
     "express": "^4"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1",
-    "@cap-js/cds-types": "^0.10.0"
+    "@cap-js/cds-types": "^0.10.0",
+    "@cap-js/sqlite": "^1"
   },
   "scripts": {
     "start": "cds-serve",
@@ -35,6 +38,19 @@
           }
         }
       }
+    },
+    "requires": {
+      "RewardsMgmtService": {
+        "kind": "odata",
+        "model": "srv/external/RewardsMgmtService",
+        "credentials": {
+          "url": "http://localhost:4005/rewardsmgmt",
+          "authentication": "BasicAuthentication",
+          "username": "karan",
+          "password": "karan123"
+        }
+      },
+      "destinations": true
     }
   },
   "sapux": [

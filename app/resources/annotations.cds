@@ -157,3 +157,27 @@ annotate service.LearningResources with {
         },
     )
 };
+annotate service.LearningResources with {
+    Category @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Categories',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : Category,
+                    ValueListProperty : 'Name',
+                },
+                {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'Description',
+                },
+            ],
+            Label : '{i18n>Category1}',
+        },
+        Common.ValueListWithFixedValues : false
+)};
+
+annotate service.Categories with {
+    Name @Common.Text : Description
+};
+

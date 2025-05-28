@@ -1,4 +1,5 @@
 using {com.goforward as db} from '../db/schema';
+using {RewardsMgmtService as external} from './external/RewardsMgmtService';
 
 service LifeMgmtService {
     aspect inFormat {
@@ -17,7 +18,7 @@ service LifeMgmtService {
             *,
             concat(
                 Duration, ' ', Time.unit
-            ) as TimeDuration : String(20)
+            ) as TimeDuration : String(20),
         }
         actions {
 
@@ -52,7 +53,7 @@ service LifeMgmtService {
             },
                               newName : inFormat : name @title: '{i18n>newFormatName}' );
 
-            @Common.SideEffects             : {
+            @Common.SideEffects: {
                 $Type           : 'Common.SideEffectsType',
                 TargetProperties: ['/LifeMgmtService.EntityContainer/LearningResources/Format', ],
                 TargetEntities  : ['/LifeMgmtService.EntityContainer/Format']
@@ -75,7 +76,19 @@ service LifeMgmtService {
     entity ResourceTags      as projection on db.TagLabelResources;
     entity Status            as projection on db.Status;
 
+    entity Categories        as
+        projection on external.Categories {
+            ID,
+            Name,
+            Description
+        };
+
 }
 
 annotate LifeMgmtService with @path: '/life-mgmt';
 annotate LifeMgmtService with @requires: 'authenticated-user';
+
+annotate LifeMgmtService.Categories with {
+    Name        @Common.Label: 'Category Name';
+    Description @Common.Label: 'Category Description'
+};

@@ -1,9 +1,17 @@
 const cds = require('@sap/cds')
 
 module.exports = class LifeMgmtService extends cds.ApplicationService {
-  init() {
+  async init() {
 
-    const { Tasks, LearningResources, TaskTags, ResourceTags, Status, Format } = cds.entities('LifeMgmtService')
+    const { Tasks, LearningResources, TaskTags, ResourceTags, Status, Format, Categories } = cds.entities('LifeMgmtService');
+    this.rewardService = await cds.connect.to('RewardsMgmtService');
+
+    this.on('READ', Categories, async (req) => {
+      const { Categories } = this.rewardService.entities;
+      const result = await this.rewardService.run(SELECT.from(Categories));
+      console.log("after result", result);
+      return result;
+    })
 
     this.before(['CREATE', 'UPDATE'], Tasks, async (req) => {
       console.log('Before CREATE/UPDATE Tasks', req.data)
