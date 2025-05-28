@@ -2,12 +2,11 @@ using LifeMgmtService as service from '../../srv/service';
 using from '../../db/schema';
 
 
-
 annotate service.Tasks with @(UI: {
     SelectionFields     : [
         Title,
         PriorityLevel_code,
-        Status_code,
+        Status,
         Tags.name
     ],
     LineItem            : [
@@ -15,13 +14,13 @@ annotate service.Tasks with @(UI: {
         {Value: Description},
         {Value: AssignedTo},
         {Value: PriorityLevel_code},
-        {Value: Status_code},
+        {Value: Status},
         {Value: StartDate},
         {Value: DueDate},
         {Value: CompletionDate},
         {Value: EstimatedDuration},
         {Value: ActualDuration},
-        {Value: TaskType},
+        {Value: TaskType_name},
         {Value: Tags.name},
         {Value: CommentsNotes},
     ],
@@ -59,13 +58,13 @@ annotate service.Tasks with @(
             {Value: Description, },
             {Value: AssignedTo, },
             {Value: PriorityLevel_code, },
-            {Value: Status_code, },
+            {Value: Status, },
             {Value: StartDate, },
             {Value: DueDate, },
             {Value: CompletionDate, },
             {Value: EstimatedDuration, },
             {Value: ActualDuration, },
-            {Value: TaskType, },
+            {Value: TaskType_name, },
             {Value: Tags.name}
         ],
     },
@@ -91,61 +90,63 @@ annotate service.Tasks with @(
         },
     ]
 );
+
 annotate service.Tasks with {
-    PriorityLevel @(Common.ValueList : {
-            $Type : 'Common.ValueListType',
-            CollectionPath : 'Priority',
-            Parameters : [
+    PriorityLevel @(
+        Common.ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Priority',
+            Parameters    : [
                 {
-                    $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : PriorityLevel_code,
-                    ValueListProperty : 'code',
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: PriorityLevel_code,
+                    ValueListProperty: 'code',
                 },
                 {
-                    $Type : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'descr',
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'descr',
                 },
             ],
-            Label : '{i18n>PriorityLevel1}',
+            Label         : '{i18n>PriorityLevel1}',
         },
-        Common.ValueListWithFixedValues : true,
-        Common.Text : {
-            $value : PriorityLevel.descr,
-            ![@UI.TextArrangement] : #TextFirst,
+        Common.ValueListWithFixedValues: true,
+        Common.Text                    : {
+            $value                : PriorityLevel.descr,
+            ![@UI.TextArrangement]: #TextFirst,
         },
-)};
+    )
+};
 
 annotate service.Priority with {
-    code @Common.Text : descr
+    code @Common.Text: descr
 };
 
 annotate service.Tasks with {
     Status @(
-        Common.Text : {
-            $value : Status.descr,
-            ![@UI.TextArrangement] : #TextFirst
-        },
-        Common.ValueList : {
-            $Type : 'Common.ValueListType',
-            CollectionPath : 'Status',
-            Parameters : [
+        Common.ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Status',
+            Parameters    : [
                 {
-                    $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : Status_code,
-                    ValueListProperty : 'code',
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: Status,
+                    ValueListProperty: 'code',
                 },
                 {
-                    $Type : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'descr',
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'descr',
                 },
             ],
-            Label : '{i18n>Status1}',
+            Label         : '{i18n>Status1}',
         },
-        Common.ValueListWithFixedValues : true,
+        Common.ValueListWithFixedValues: true,
     )
 };
 
 annotate service.Status with {
-    code @Common.Text : descr
+    code @Common.Text : {
+        $value : descr,
+        ![@UI.TextArrangement] : #TextFirst,
+    }
 };
 

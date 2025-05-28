@@ -1,7 +1,7 @@
 {
-  "name": "learning_resources",
+  "name": "resources",
   "version": "0.0.1",
-  "description": "An SAP Fiori application for managing learning resources.",
+  "description": "An SAP Fiori application for manage resources.",
   "keywords": [
     "ui5",
     "openui5",

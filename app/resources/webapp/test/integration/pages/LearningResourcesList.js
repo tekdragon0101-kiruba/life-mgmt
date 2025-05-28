@@ -8,7 +8,7 @@ sap.ui.define(['sap/fe/test/ListReport'], function(ListReport) {
 
     return new ListReport(
         {
-            appId: 'com.goforward.learningresources',
+            appId: 'com.goforward.resources',
             componentId: 'LearningResourcesList',
             contextPath: '/LearningResources'
         },

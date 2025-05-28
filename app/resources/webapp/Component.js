@@ -3,7 +3,7 @@ sap.ui.define(
     function (Component) {
         "use strict";
 
-        return Component.extend("com.goforward.learningresources.Component", {
+        return Component.extend("com.goforward.resources.Component", {
             metadata: {
                 manifest: "json"
             }

@@ -13,7 +13,6 @@ annotate db.LearningResources with {
     Description     @title: '{i18n>Description}';
     DifficultyLevel @title: '{i18n>DifficultyLevel}';
     Status          @title: '{i18n>Status}';
-    Tags            @title: '{i18n>Tags}';
 };
 
 annotate db.Tasks with {
@@ -31,8 +30,8 @@ annotate db.Tasks with {
     TaskType          @title: '{i18n>TaskType}';
     Tags              @title: '{i18n>Tags}';
     CommentsNotes     @title: '{i18n>CommentsNotes}';
-    parentTask        @title: '{i18n>parentTask}';
-    subtasks          @title: '{i18n>subtasks}';
+    // parentTask        @title: '{i18n>parentTask}';
+    // subtasks          @title: '{i18n>subtasks}';
 };
 
 annotate db.Priority with {
@@ -60,7 +59,7 @@ annotate db.TagLabelResources with {
 };
 
 annotate db.TaskTypes with {
-    Typename @title: '{i18n>TypeName}';
+    name @title: '{i18n>TypeName}';
     descr    @title: '{i18n>descr}'
 };
 

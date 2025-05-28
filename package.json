@@ -16,8 +16,8 @@
   "scripts": {
     "start": "cds-serve",
     "dev-mock": "cds watch --profile dev",
-    "watch-learning_resources": "cds watch --open learning_resources/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-tasks": "cds watch --open tasks/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-tasks": "cds watch --open tasks/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-resources": "cds watch --open resources/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "[dev]": {
@@ -38,7 +38,7 @@
     }
   },
   "sapux": [
-    "app/learning_resources",
-    "app/tasks"
+    "app/tasks",
+    "app/resources"
   ]
 }

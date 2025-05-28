@@ -8,7 +8,7 @@ sap.ui.define(['sap/fe/test/ObjectPage'], function(ObjectPage) {
 
     return new ObjectPage(
         {
-            appId: 'com.goforward.learningresources',
+            appId: 'com.goforward.resources',
             componentId: 'LearningResourcesObjectPage',
             contextPath: '/LearningResources'
         },

@@ -1,15 +1,15 @@
 sap.ui.require(
     [
         'sap/fe/test/JourneyRunner',
-        'com/goforward/learningresources/test/integration/FirstJourney',
-		'com/goforward/learningresources/test/integration/pages/LearningResourcesList',
-		'com/goforward/learningresources/test/integration/pages/LearningResourcesObjectPage'
+        'com/goforward/resources/test/integration/FirstJourney',
+		'com/goforward/resources/test/integration/pages/LearningResourcesList',
+		'com/goforward/resources/test/integration/pages/LearningResourcesObjectPage'
     ],
     function(JourneyRunner, opaJourney, LearningResourcesList, LearningResourcesObjectPage) {
         'use strict';
         var JourneyRunner = new JourneyRunner({
             // start index.html in web folder
-            launchUrl: sap.ui.require.toUrl('com/goforward/learningresources') + '/index.html'
+            launchUrl: sap.ui.require.toUrl('com/goforward/resources') + '/index.html'
         });
 
        
