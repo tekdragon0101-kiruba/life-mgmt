@@ -31,9 +31,8 @@ annotate db.Tasks with {
     TaskType          @title: '{i18n>TaskType}';
     Tags              @title: '{i18n>Tags}';
     CommentsNotes     @title: '{i18n>CommentsNotes}';
-// Dependencies      @title: '{i18n>Dependencies}';
-// parentTask        @title: '{i18n>parentTask}';
-// subtasks          @title: '{i18n>subtasks}';
+    parentTask        @title: '{i18n>parentTask}';
+    subtasks          @title: '{i18n>subtasks}';
 };
 
 annotate db.Priority with {
@@ -58,4 +57,13 @@ annotate db.TagLabelResources with {
     name     @title: '{i18n>Tagname}';
     resource @title: '{i18n>resource}';
 
+};
+
+annotate db.TaskTypes with {
+    Typename @title: '{i18n>TypeName}';
+    descr    @title: '{i18n>descr}'
+};
+
+annotate db.DifficultyLevel with {
+    levelName @title : '{i18n>DifficultyLevel}'
 };
