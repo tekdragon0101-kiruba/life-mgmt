@@ -172,7 +172,7 @@ annotate service.LearningResources with {
                     ValueListProperty : 'Description',
                 },
             ],
-            Label : '{i18n>Category1}',
+            Label : '{i18n>Category}',
         },
         Common.ValueListWithFixedValues : false
 )};
