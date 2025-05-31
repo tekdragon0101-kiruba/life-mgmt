@@ -44,7 +44,6 @@ action RewardsMgmtService.createCategory(
   }
   @Common.Text : Name
   @Common.Text.@UI.TextArrangement : #TextOnly
-  @UI.Hidden : { $If: [ { $Eq: [ { $Path: 'isChild' }, true ] }, false, true ] }
   parentCategory_ID : String(36)
 );
 
@@ -288,7 +287,6 @@ type RewardsMgmtService.inCategory {
   }
   @Common.Text : Name
   @Common.Text.@UI.TextArrangement : #TextOnly
-  @UI.Hidden : { $If: [ { $Eq: [ { $Path: 'isChild' }, true ] }, false, true ] }
   parentCategory_ID : String(36);
 };
 
