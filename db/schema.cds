@@ -31,7 +31,7 @@ entity Tasks : managed {
         AssignedTo        : String(255)                   @readonly  @cds.on.insert: $user; // Person or team responsible
         PriorityLevel     : Association to Priority       @mandatory; // Low, Medium, High, Critical
         Status            : Association to Status; // Not Started, In Progress, Completed, On Hold, Overdue
-        StartDate         : DateTime default CURRENT_DATE @mandatory; // When the task begins
+        StartDate         : DateTime default $now @mandatory; // When the task begins
         DueDate           : DateTime                      @mandatory; // Deadline for completion
         CompletionDate    : DateTime; // Date when finished
         EstimatedDuration : Integer; // Expected time (in hours or days)

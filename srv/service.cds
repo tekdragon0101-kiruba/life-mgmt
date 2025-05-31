@@ -14,13 +14,7 @@ service LifeMgmtService {
         };
 
             @odata.draft.enabled
-    entity LearningResources as
-        projection on db.LearningResources {
-            *,
-            concat(
-                Duration, ' ', Time.unit
-            ) as TimeDuration : String(20),
-        }
+    entity LearningResources as projection on db.LearningResources
         actions {
 
             @Common.SideEffects: {

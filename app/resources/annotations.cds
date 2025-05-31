@@ -23,10 +23,6 @@ annotate service.LearningResources with @(
             },
             {Value: Format_name},
             {Value: Description},
-            {
-                Value: TimeDuration,
-                Label: 'Time Duration'
-            },
             {Value: DifficultyLevel_levelName},
             {Value: Status_code},
             {Value: Tags.name}
@@ -83,11 +79,19 @@ annotate service.LearningResources with @(
                 Value     : Duration,
                 @UI.Hidden: IsActiveEntity,
             },
-            {
-                Value     : TimeDuration,
-                @UI.Hidden: {$edmJson: {$Not: {$Path: 'IsActiveEntity'}}},
-                Label     : 'Time Duration'
-            },
+            // {
+            //     Value     : {$edmJson: {
+            //         $Apply   : [
+            //             Duration,
+            //             ' ',
+            //             Time_unit
+
+            //         ],
+            //         $Function: 'odata.concat',
+            //     }, },
+            //     @UI.Hidden: {$edmJson: {$Not: {$Path: 'IsActiveEntity'}}},
+            //     Label     : 'Time Duration'
+            // },
             {Value: Description},
             {Value: DifficultyLevel_levelName},
             {Value: Status_code},
@@ -157,27 +161,29 @@ annotate service.LearningResources with {
         },
     )
 };
+
 annotate service.LearningResources with {
-    Category @(Common.ValueList : {
-            $Type : 'Common.ValueListType',
-            CollectionPath : 'Categories',
-            Parameters : [
+    Category @(
+        Common.ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Categories',
+            Parameters    : [
                 {
-                    $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : Category,
-                    ValueListProperty : 'Name',
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: Category,
+                    ValueListProperty: 'Name',
                 },
                 {
-                    $Type : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'Description',
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'Description',
                 },
             ],
-            Label : '{i18n>Category}',
+            Label         : '{i18n>Category}',
         },
-        Common.ValueListWithFixedValues : false
-)};
-
-annotate service.Categories with {
-    Name @Common.Text : Description
+        Common.ValueListWithFixedValues: false
+    )
 };
 
+annotate service.Categories with {
+    Name @Common.Text: Description
+};
