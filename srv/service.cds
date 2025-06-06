@@ -14,7 +14,13 @@ service LifeMgmtService {
         };
 
             @odata.draft.enabled
-    entity LearningResources as projection on db.LearningResources
+    entity LearningResources as
+        projection on db.LearningResources {
+            *,
+            concat(
+                Duration, ' ', Time.unit
+            ) as TimeDuration : String
+        }
         actions {
 
             @Common.SideEffects: {
@@ -50,7 +56,7 @@ service LifeMgmtService {
 
             @Common.SideEffects             : {
                 $Type           : 'Common.SideEffectsType',
-                TargetProperties: ['/LifeMgmtService.EntityContainer/LearningResources/Format', ],
+                TargetProperties: ['/LifeMgmtService.EntityContainer/LearningResources/Format_name', ],
                 TargetEntities  : ['/LifeMgmtService.EntityContainer/Format']
             }
             @cds.odata.bindingparameter.name: '_it'

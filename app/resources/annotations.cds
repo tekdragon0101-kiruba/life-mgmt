@@ -22,6 +22,11 @@ annotate service.LearningResources with @(
                 Url  : AccessLink,
             },
             {Value: Format_name},
+            {
+                Value     : TimeDuration,
+                Label     : 'Time Duration',
+                @UI.Hidden: {$edmJson: {$Not: {$Path: 'IsActiveEntity'}}},
+            },
             {Value: Description},
             {Value: DifficultyLevel_levelName},
             {Value: Status_code},
@@ -79,6 +84,11 @@ annotate service.LearningResources with @(
                 Value     : Duration,
                 @UI.Hidden: IsActiveEntity,
             },
+            {
+                Value     : TimeDuration,
+                Label     : 'Time Duration',
+                @UI.Hidden: {$edmJson: {$Not: {$Path: 'IsActiveEntity'}}},
+            },
             // {
             //     Value     : {$edmJson: {
             //         $Apply   : [
@@ -113,9 +123,7 @@ annotate service.LearningResources with @(
                 Action    : 'LifeMgmtService.deleteFormat',
                 Label     : '{i18n>deleteFormat}',
                 @UI.Hidden: IsActiveEntity,
-            },
-
-
+            }
         ],
     },
 );
@@ -133,11 +141,8 @@ annotate service.LearningResources with {
             Label         : '{i18n>DifficultyLevel1}',
         },
         Common.ValueListWithFixedValues: true
-    )
-};
-
-annotate service.LearningResources with {
-    Status @(
+    );
+    Status          @(
         Common.ValueList               : {
             $Type         : 'Common.ValueListType',
             CollectionPath: 'Status',
@@ -152,18 +157,15 @@ annotate service.LearningResources with {
                     ValueListProperty: 'descr',
                 },
             ],
-            Label         : '{i18n>Status1}',
+            Label         : '{i18n>Status}',
         },
         Common.ValueListWithFixedValues: true,
         Common.Text                    : {
             $value                : Status.descr,
             ![@UI.TextArrangement]: #TextFirst,
         },
-    )
-};
-
-annotate service.LearningResources with {
-    Category @(
+    );
+    Category        @(
         Common.ValueList               : {
             $Type         : 'Common.ValueListType',
             CollectionPath: 'Categories',
@@ -181,10 +183,15 @@ annotate service.LearningResources with {
             Label         : '{i18n>Category}',
         },
         Common.ValueListWithFixedValues: false
-    )
+    );
+    AccessLink      @Common: {
+        Text           : Title,
+        TextArrangement: #TextOnly,
+    };
+    Time            @Common: {ValueListWithFixedValues, };
+    Format          @Common: {ValueListWithFixedValues, };
 };
 
 annotate service.Categories with {
     Name @Common.Text: Description
 };
-
