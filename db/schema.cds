@@ -26,20 +26,20 @@ entity LearningResources : managed {
 
 entity Tasks : managed {
     key TaskID            : UUID; // Unique identifier
-        Title             : String(255)                   @mandatory; // Brief name of the task
-        Description       : String(1000)                  @UI.MultiLineText; // Detailed task explanation
-        AssignedTo        : String(255)                   @readonly  @cds.on.insert: $user; // Person or team responsible
-        PriorityLevel     : Association to Priority       @mandatory; // Low, Medium, High, Critical
+        Title             : String(255)              @mandatory; // Brief name of the task
+        Description       : String(1000)             @UI.MultiLineText; // Detailed task explanation
+        AssignedTo        : String(255)              @readonly  @cds.on.insert: $user; // Person or team responsible
+        PriorityLevel     : Association to Priority  @mandatory; // Low, Medium, High, Critical
         Status            : Association to Status; // Not Started, In Progress, Completed, On Hold, Overdue
-        StartDate         : DateTime default $now @mandatory; // When the task begins
-        DueDate           : DateTime                      @mandatory; // Deadline for completion
+        StartDate         : DateTime default $now    @mandatory; // When the task begins
+        DueDate           : DateTime                 @mandatory; // Deadline for completion
         CompletionDate    : DateTime; // Date when finished
         EstimatedDuration : Integer; // Expected time (in hours or days)
         ActualDuration    : Integer; // Time actually spent
-        TaskType          : Association to TaskTypes      @mandatory; // Categorization (Development, Research, Review)
+        TaskType          : Association to TaskTypes @mandatory; // Categorization (Development, Research, Review)
         Tags              : Composition of many TagLabelTasks
                                 on Tags.task = $self;
-        CommentsNotes     : String(5000)                  @UI.MultiLineText;
+        CommentsNotes     : String(5000)             @UI.MultiLineText;
 // parentTask        : Association to Tasks;
 // subtasks          : Composition of many Tasks
 //                         on subtasks.parentTask = $self;
@@ -50,7 +50,7 @@ entity Tasks : managed {
 
 @cds.odata.valuelist
 @cds.autoexpose
-entity Format {
+entity Format  {
     key name : String(50) @title: '{i18n>formatName}';
 }
 
@@ -68,10 +68,6 @@ entity TimeUnits {
         } default #Hours;
 }
 
-annotate LearningResources with {
-    Time   @Common: {ValueListWithFixedValues, };
-    Format @Common: {ValueListWithFixedValues, };
-};
 
 
 @cds.odata.valuelist
@@ -80,6 +76,7 @@ entity DifficultyLevel {
     key levelName : String(20) enum {
             Beginner;
             Intermediate;
+            Expert;
             Advanced
         } default #Beginner;
 }

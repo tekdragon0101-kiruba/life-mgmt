@@ -49,6 +49,7 @@ module.exports = class LifeMgmtService extends cds.ApplicationService {
       console.log('On createFormat', req.data, req.params);
       const name = req.data.name[0].toUpperCase() + req.data.name.slice(1, req.data.name.length).toLowerCase();
       await INSERT.into(Format).entries({ name: name });
+      await UPDATE(LearningResources.drafts).set({ Format_name: name }).where(req.params[0]);
       req.notify("Format created Successfully");
     })
     this.on('editFormat', async (req) => {
@@ -62,6 +63,7 @@ module.exports = class LifeMgmtService extends cds.ApplicationService {
     this.on('deleteFormat', async (req) => {
       console.log('On deleteFormat', req.data);
       await DELETE.from(Format).where(req.data);
+      await UPDATE(LearningResources.drafts).set({ Format_name: null }).where(req.params[0]);
       req.notify(`Format ${req.data.name} deleted`);
     })
 

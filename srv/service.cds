@@ -19,7 +19,7 @@ service LifeMgmtService {
 
             @Common.SideEffects: {
                 $Type           : 'Common.SideEffectsType',
-                TargetProperties: ['/LifeMgmtService.EntityContainer/LearningResources/Format', ],
+                TargetProperties: ['/LifeMgmtService.EntityContainer/LearningResources/Format_name', ],
                 TargetEntities  : ['/LifeMgmtService.EntityContainer/Format']
             }
 
@@ -48,12 +48,14 @@ service LifeMgmtService {
             },
                               newName : inFormat : name @title: '{i18n>newFormatName}' );
 
-            @Common.SideEffects: {
+            @Common.SideEffects             : {
                 $Type           : 'Common.SideEffectsType',
                 TargetProperties: ['/LifeMgmtService.EntityContainer/LearningResources/Format', ],
                 TargetEntities  : ['/LifeMgmtService.EntityContainer/Format']
             }
-            action deleteFormat(name : inFormat  : name  @title: '{i18n>formatName}'  @Common: {
+            @cds.odata.bindingparameter.name: '_it'
+            action deleteFormat( @UI.ParameterDefaultValue: _it.Format_name
+                                 name : inFormat : name  @title: '{i18n>formatName}'  @Common: {
                 ValueList: {
                     $Type         : 'Common.ValueListType',
                     CollectionPath: 'Format',

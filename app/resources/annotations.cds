@@ -187,3 +187,4 @@ annotate service.LearningResources with {
 annotate service.Categories with {
     Name @Common.Text: Description
 };
+

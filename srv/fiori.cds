@@ -10,3 +10,8 @@ annotate service.LearningResources with {
         TextArrangement: #TextOnly,
     } 
 };
+
+annotate service.LearningResources with {
+    Time   @Common: {ValueListWithFixedValues, };
+    Format @Common: {ValueListWithFixedValues, };
+};
