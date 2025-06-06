@@ -7,10 +7,38 @@ service LifeMgmtService {
         name : String(50) @mandatory;
     };
 
-    @odata.draft.enabled
+            @odata.draft.enabled
     entity Tasks             as projection on db.Tasks
         actions {
-            action createCategory();
+            @Common: {SideEffects: {
+                $Type         : 'Common.SideEffectsType',
+                TargetEntities: ['/LifeMgmtService.EntityContainer/Tasks'],
+            }, }
+            action createTaskFromResources(
+                                           @Common: {
+                                               ValueList: {
+                                                   $Type         : 'Common.ValueListType',
+                                                   CollectionPath: 'LearningResources',
+                                                   Parameters    : [
+                                                       {
+                                                           $Type            : 'Common.ValueListParameterInOut',
+                                                           LocalDataProperty: resourceID,
+                                                           ValueListProperty: 'ResourceID',
+                                                       },
+                                                       {
+                                                           $Type            : 'Common.ValueListParameterDisplayOnly',
+                                                           ValueListProperty: 'Title',
+                                                       },
+                                                       {
+                                                           $Type : 'Common.ValueListParameterDisplayOnly',
+                                                           ValueListProperty : 'Subject',
+                                                       },
+                                                   ],
+                                               },
+                                               Label    : '{i18n>Resources}',
+                                               
+                                           }
+                                           resourceID : String(36));
         };
 
             @odata.draft.enabled
@@ -28,7 +56,6 @@ service LifeMgmtService {
                 TargetProperties: ['/LifeMgmtService.EntityContainer/LearningResources/Format_name', ],
                 TargetEntities  : ['/LifeMgmtService.EntityContainer/Format']
             }
-
             action createFormat(name : inFormat  : name @title: '{i18n>formatName}' );
 
             @Common.SideEffects             : {

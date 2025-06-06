@@ -40,6 +40,7 @@ entity Tasks : managed {
         Tags              : Composition of many TagLabelTasks
                                 on Tags.task = $self;
         CommentsNotes     : String(5000)             @UI.MultiLineText;
+        resource          : Association to LearningResources;
 // parentTask        : Association to Tasks;
 // subtasks          : Composition of many Tasks
 //                         on subtasks.parentTask = $self;
@@ -50,7 +51,7 @@ entity Tasks : managed {
 
 @cds.odata.valuelist
 @cds.autoexpose
-entity Format  {
+entity Format {
     key name : String(50) @title: '{i18n>formatName}';
 }
 
@@ -67,7 +68,6 @@ entity TimeUnits {
             Years;
         } default #Hours;
 }
-
 
 
 @cds.odata.valuelist

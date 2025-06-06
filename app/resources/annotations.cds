@@ -37,7 +37,7 @@ annotate service.LearningResources with @(
             TypeName      : '{i18n>resource}',
             TypeNamePlural: '{i18n>resources}',
             Title         : {Value: Title, },
-            Description   : {Value: Description, },
+            Description   : {Value: Description, }, 
         },
         HeaderFacets        : [{
             $Type : 'UI.ReferenceFacet',

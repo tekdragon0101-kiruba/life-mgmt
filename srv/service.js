@@ -67,6 +67,15 @@ module.exports = class LifeMgmtService extends cds.ApplicationService {
       req.notify(`Format ${req.data.name} deleted`);
     })
 
+    this.on('createTaskFromResources', async (req) => {
+      console.log('On createTaskFromResources', req.data, req.params);
+      const { TaskID } = req.params[0], { ResourceID } = req.data;
+      const result = await SELECT.one.from(LearningResources).where(ResourceID);
+      console.log(result);
+
+
+    })
+
     return super.init()
   }
 }

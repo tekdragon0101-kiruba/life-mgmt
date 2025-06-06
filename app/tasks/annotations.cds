@@ -44,7 +44,14 @@ annotate service.Tasks with @(UI: {
             {Value: modifiedBy}
         ],
     },
-});
+},
+    UI.Identification : [
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'LifeMgmtService.createTaskFromResources',
+            Label : '{i18n>createTaskFromResources}',
+        },
+    ],);
 
 
 //////////////////////////////////////////////////////////
