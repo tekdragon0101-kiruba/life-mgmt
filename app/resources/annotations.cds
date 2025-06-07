@@ -37,7 +37,7 @@ annotate service.LearningResources with @(
             TypeName      : '{i18n>resource}',
             TypeNamePlural: '{i18n>resources}',
             Title         : {Value: Title, },
-            Description   : {Value: Description, }, 
+            Description   : {Value: Description, },
         },
         HeaderFacets        : [{
             $Type : 'UI.ReferenceFacet',
@@ -107,22 +107,27 @@ annotate service.LearningResources with @(
             {Value: Status_code},
             {Value: Tags.name},
             {
-                $Type     : 'UI.DataFieldForAction',
-                Action    : 'LifeMgmtService.createFormat',
-                Label     : '{i18n>createFormat}',
+                $Type     : 'UI.DataFieldForActionGroup',
+                Label     : 'Learning Medium Operations',
                 @UI.Hidden: IsActiveEntity,
-            },
-            {
-                $Type     : 'UI.DataFieldForAction',
-                Action    : 'LifeMgmtService.editFormat',
-                Label     : '{i18n>editFormat}',
-                @UI.Hidden: IsActiveEntity,
-            },
-            {
-                $Type     : 'UI.DataFieldForAction',
-                Action    : 'LifeMgmtService.deleteFormat',
-                Label     : '{i18n>deleteFormat}',
-                @UI.Hidden: IsActiveEntity,
+                Actions   : [
+                    {
+                        $Type : 'UI.DataFieldForAction',
+                        Action: 'LifeMgmtService.createFormat',
+                        Label : '{i18n>createFormat}',
+
+                    },
+                    {
+                        $Type : 'UI.DataFieldForAction',
+                        Action: 'LifeMgmtService.editFormat',
+                        Label : '{i18n>editFormat}',
+                    },
+                    {
+                        $Type : 'UI.DataFieldForAction',
+                        Action: 'LifeMgmtService.deleteFormat',
+                        Label : '{i18n>deleteFormat}',
+                    }
+                ],
             }
         ],
     },
@@ -194,4 +199,10 @@ annotate service.LearningResources with {
 
 annotate service.Categories with {
     Name @Common.Text: Description
+};
+
+annotate service.LearningResources with {
+    // Open link in new tab
+    AccessLink @HTML5.LinkTarget: '_blank'
+
 };

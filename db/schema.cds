@@ -7,13 +7,13 @@ using {
 
 
 entity LearningResources : managed {
-    key ResourceID      : UUID; // Unique identifier
+    key ResourceID      : UUID; 
         Title           : String(255)                     @mandatory;
         Category        : String(100);
         Subject         : String(1000)                    @UI.MultiLineText;
         AuthorSource    : String(255)                     @mandatory;
-        PublicationDate : Date; // Date when it was published
-        AccessLink      : String(500)                     @mandatory;
+        PublicationDate : Date;
+        AccessLink      : String(500)                     @mandatory @HTML5.LinkTarget : '';
         Format          : Association to Format           @assert.target; // Medium (e.g., PDF, online course, book)
         Time            : Association to TimeUnits        @mandatory  @assert.target;
         Duration        : Integer                         @mandatory;
@@ -41,9 +41,6 @@ entity Tasks : managed {
                                 on Tags.task = $self;
         CommentsNotes     : String(5000)             @UI.MultiLineText;
         resource          : Association to LearningResources;
-// parentTask        : Association to Tasks;
-// subtasks          : Composition of many Tasks
-//                         on subtasks.parentTask = $self;
 }
 
 

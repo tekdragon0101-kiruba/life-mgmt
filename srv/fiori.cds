@@ -5,5 +5,8 @@ annotate service.Tasks with {
 };
 
 annotate service.LearningResources with {
-    ResourceID @UI.Hidden: true
+    ResourceID  @UI.Hidden: true  @Common: {
+        Text           : Title,
+        TextArrangement: #TextOnly,
+    }
 };

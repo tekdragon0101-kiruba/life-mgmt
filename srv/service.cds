@@ -30,13 +30,13 @@ service LifeMgmtService {
                                                            ValueListProperty: 'Title',
                                                        },
                                                        {
-                                                           $Type : 'Common.ValueListParameterDisplayOnly',
-                                                           ValueListProperty : 'Subject',
+                                                           $Type            : 'Common.ValueListParameterDisplayOnly',
+                                                           ValueListProperty: 'Subject',
                                                        },
                                                    ],
                                                },
                                                Label    : '{i18n>Resources}',
-                                               
+
                                            }
                                            resourceID : String(36));
         };
@@ -45,13 +45,11 @@ service LifeMgmtService {
     entity LearningResources as
         projection on db.LearningResources {
             *,
-            concat(
-                Duration, ' ', Time.unit
-            ) as TimeDuration : String
+            Duration || ' ' || Time.unit as TimeDuration : String
         }
         actions {
 
-            @Common.SideEffects: {
+            @Common.SideEffects             : {
                 $Type           : 'Common.SideEffectsType',
                 TargetProperties: ['/LifeMgmtService.EntityContainer/LearningResources/Format_name', ],
                 TargetEntities  : ['/LifeMgmtService.EntityContainer/Format']
