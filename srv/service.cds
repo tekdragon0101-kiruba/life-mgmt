@@ -11,8 +11,8 @@ service LifeMgmtService {
     entity Tasks             as projection on db.Tasks
         actions {
             @Common                         : {SideEffects #createTaskFromResource: {
-                $Type           : 'Common.SideEffectsType',
-                TargetEntities  : ['/LifeMgmtService.EntityContainer/Tasks'],
+                $Type         : 'Common.SideEffectsType',
+                TargetEntities: ['/LifeMgmtService.EntityContainer/Tasks'],
                 // TargetProperties: ['/LifeMgmtService.EntityContainer/Tasks/Tags/name']
             }, }
             @cds.odata.bindingparameter.name: '_it'
@@ -47,7 +47,15 @@ service LifeMgmtService {
     entity LearningResources as
         projection on db.LearningResources {
             *,
-            Duration || ' ' || Time.unit as TimeDuration : String
+            Duration || ' ' || Time.unit as TimeDuration : String,
+            case
+                when
+                    task.TaskID is null
+                then
+                    'Unassigned'
+                else
+                    'Assigned To Task'
+            end                          as Status       : String(30)
         }
         actions {
 

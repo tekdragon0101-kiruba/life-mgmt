@@ -28,6 +28,11 @@ annotate service.LearningResources with @(
             },
             {Value: Description},
             {Value: DifficultyLevel_levelName},
+            {
+                Value                  : Status,
+                ![@Common.FieldControl]: #ReadOnly,
+                Label                  : '{i18n>Status}'
+            },
             {Value: Tags.name}
         ],
         HeaderInfo          : {
@@ -87,21 +92,13 @@ annotate service.LearningResources with @(
                 Label     : 'Time Duration',
                 @UI.Hidden: {$edmJson: {$Not: {$Path: 'IsActiveEntity'}}},
             },
-            // {
-            //     Value     : {$edmJson: {
-            //         $Apply   : [
-            //             Duration,
-            //             ' ',
-            //             Time_unit
-
-            //         ],
-            //         $Function: 'odata.concat',
-            //     }, },
-            //     @UI.Hidden: {$edmJson: {$Not: {$Path: 'IsActiveEntity'}}},
-            //     Label     : 'Time Duration'
-            // },
             {Value: Description},
             {Value: DifficultyLevel_levelName},
+            {
+                Value                  : Status,
+                ![@Common.FieldControl]: #ReadOnly,
+                Label                  : '{i18n>Status}'
+            },
             {Value: Tags.name},
             {
                 $Type     : 'UI.DataFieldForActionGroup',
