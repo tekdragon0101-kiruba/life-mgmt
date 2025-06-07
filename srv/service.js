@@ -1,5 +1,5 @@
-const cds = require('@sap/cds')
-const fs = require('fs');
+const cds = require('@sap/cds');
+const { uuid } = require('@sap/cds/lib/utils/cds-utils');
 
 module.exports = class LifeMgmtService extends cds.ApplicationService {
   async init() {
@@ -70,10 +70,18 @@ module.exports = class LifeMgmtService extends cds.ApplicationService {
     this.on('createTaskFromResources', async (req) => {
       console.log('On createTaskFromResources', req.data, req.params);
       const { TaskID } = req.params[0], { ResourceID } = req.data;
-      const result = await SELECT.one.from(LearningResources).where(ResourceID);
-      console.log(result);
-
-
+      const result = await SELECT.one.from(LearningResources, a => { a`.*`, a.Tags(tag => { tag.ID, tag.name }) }).where(ResourceID); console.log(result);
+      const drafts = await SELECT.one.from(Tasks.drafts, TaskID).columns('DraftAdministrativeData_DraftUUID');
+      const taskCreationData = {
+        Title: result.Title, Description: result.Description, resource_ResourceID: result.ResourceID, EstimatedDuration: result.Duration * 3, Tags: result.Tags.map(i => ({
+          ID: i.ID,
+          name: i.name,
+          task_TaskID: TaskID,
+          DraftAdministrativeData_DraftUUID: drafts.DraftAdministrativeData_DraftUUID
+        }))
+      };
+      await UPDATE(Tasks.drafts, TaskID).with(taskCreationData);
+      req.notify('The task has been created with resource data')
     })
 
     return super.init()

@@ -10,10 +10,12 @@ service LifeMgmtService {
             @odata.draft.enabled
     entity Tasks             as projection on db.Tasks
         actions {
-            @Common: {SideEffects: {
-                $Type         : 'Common.SideEffectsType',
-                TargetEntities: ['/LifeMgmtService.EntityContainer/Tasks'],
+            @Common                         : {SideEffects #createTaskFromResource: {
+                $Type           : 'Common.SideEffectsType',
+                TargetEntities  : ['/LifeMgmtService.EntityContainer/Tasks'],
+                // TargetProperties: ['/LifeMgmtService.EntityContainer/Tasks/Tags/name']
             }, }
+            @cds.odata.bindingparameter.name: '_it'
             action createTaskFromResources(
                                            @Common: {
                                                ValueList: {
@@ -49,7 +51,7 @@ service LifeMgmtService {
         }
         actions {
 
-            @Common.SideEffects             : {
+            @Common.SideEffects: {
                 $Type           : 'Common.SideEffectsType',
                 TargetProperties: ['/LifeMgmtService.EntityContainer/LearningResources/Format_name', ],
                 TargetEntities  : ['/LifeMgmtService.EntityContainer/Format']
