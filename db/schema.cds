@@ -13,7 +13,7 @@ entity LearningResources : managed {
         Subject         : String(1000)                    @UI.MultiLineText;
         AuthorSource    : String(255)                     @mandatory;
         PublicationDate : Date;
-        AccessLink      : String(500)                     @mandatory @HTML5.LinkTarget : '';
+        AccessLink      : String(500)                     @mandatory ;
         Format          : Association to Format           @assert.target; // Medium (e.g., PDF, online course, book)
         Time            : Association to TimeUnits        @mandatory  @assert.target;
         Duration        : Integer                         @mandatory;

@@ -2,56 +2,60 @@ using LifeMgmtService as service from '../../srv/service';
 using from '../../db/schema';
 
 
-annotate service.Tasks with @(UI: {
-    SelectionFields     : [
-        Title,
-        PriorityLevel_code,
-        Status_code,
-        Tags.name
-    ],
-    LineItem            : [
-        {Value: Title},
-        {Value: Description},
-        {Value: AssignedTo},
-        {Value: PriorityLevel_code},
-        {Value: Status_code},
-        {Value: StartDate},
-        {Value: DueDate},
-        {Value: CompletionDate},
-        {Value: EstimatedDuration},
-        {Value: ActualDuration},
-        {Value: TaskType_name},
-        {Value: Tags.name},
-        {Value: CommentsNotes},
-    ],
-    HeaderInfo          : {
-        $Type         : 'UI.HeaderInfoType',
-        TypeName      : '{i18n>task}',
-        TypeNamePlural: '{i18n>Tasks}',
-        Title         : {Value: Title, },
-        Description   : {Value: Description, },
-    },
-    HeaderFacets        : [{
-        $Type : 'UI.ReferenceFacet',
-        Target: '@UI.FieldGroup#UserLogs',
-    }, ],
-    FieldGroup #UserLogs: {
-        $Type: 'UI.FieldGroupType',
-        Data : [
-            {Value: createdAt},
-            {Value: createdBy},
-            {Value: modifiedAt},
-            {Value: modifiedBy}
+annotate service.Tasks with @(
+    UI               : {
+        SelectionFields     : [
+            Title,
+            PriorityLevel_code,
+            Status_code,
+            Tags.name
         ],
-    },
-},
-    UI.Identification : [
-        {
-            $Type : 'UI.DataFieldForAction',
-            Action : 'LifeMgmtService.createTaskFromResources',
-            Label : '{i18n>createTaskFromResources}',
+        LineItem            : [
+            {Value: Title},
+            {Value: Description},
+            {Value: AssignedTo},
+            {Value: PriorityLevel_code},
+            {Value: Status_code},
+            {Value: StartDate},
+            {Value: DueDate},
+            {Value: CompletionDate},
+            {Value: EstimatedDuration},
+            {Value: ActualDuration},
+            {Value: TaskType_name},
+            {Value: Tags.name},
+            {Value: CommentsNotes},
+        ],
+        HeaderInfo          : {
+            $Type         : 'UI.HeaderInfoType',
+            TypeName      : '{i18n>task}',
+            TypeNamePlural: '{i18n>Tasks}',
+            Title         : {Value: Title, },
+            Description   : {Value: Description, },
         },
-    ],);
+        HeaderFacets        : [{
+            $Type : 'UI.ReferenceFacet',
+            Target: '@UI.FieldGroup#UserLogs',
+        }, ],
+        FieldGroup #UserLogs: {
+            $Type: 'UI.FieldGroupType',
+            Data : [
+                {Value: createdAt},
+                {Value: createdBy},
+                {Value: modifiedAt},
+                {Value: modifiedBy}
+            ],
+        },
+    },
+    UI.Identification: [{
+        $Type        : 'UI.DataFieldForAction',
+        Action       : 'LifeMgmtService.createTaskFromResources',
+        Label        : '{i18n>createTaskFromResources}',
+        ![@UI.Hidden]: {$edmJson: {$Or: [
+            {$Path: 'HasActiveEntity'},
+            {$Path: 'IsActiveEntity'}
+        ]}, }
+    }, ],
+);
 
 
 //////////////////////////////////////////////////////////
@@ -129,7 +133,7 @@ annotate service.Priority with {
 };
 
 annotate service.Tasks with {
-    Status @(
+    Status   @(
         Common.ValueList               : {
             $Type         : 'Common.ValueListType',
             CollectionPath: 'Status',
@@ -147,9 +151,10 @@ annotate service.Tasks with {
             Label         : '{i18n>Status1}',
         },
         Common.ValueListWithFixedValues: true,
-        Common.Text : {
-            $value : Status.descr,
-            ![@UI.TextArrangement] : #TextFirst,
+        Common.Text                    : {
+            $value                : Status.descr,
+            ![@UI.TextArrangement]: #TextFirst,
         },
-    )
+    );
+    TaskType @Common: {ValueListWithFixedValues: true, }
 };
