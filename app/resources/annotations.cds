@@ -7,7 +7,6 @@ annotate service.LearningResources with @(
         SelectionFields     : [
             Title,
             Category,
-            Status_code,
             Tags.name
         ],
         LineItem            : [
@@ -29,7 +28,6 @@ annotate service.LearningResources with @(
             },
             {Value: Description},
             {Value: DifficultyLevel_levelName},
-            {Value: Status_code},
             {Value: Tags.name}
         ],
         HeaderInfo          : {
@@ -104,7 +102,6 @@ annotate service.LearningResources with @(
             // },
             {Value: Description},
             {Value: DifficultyLevel_levelName},
-            {Value: Status_code},
             {Value: Tags.name},
             {
                 $Type     : 'UI.DataFieldForActionGroup',
@@ -146,29 +143,6 @@ annotate service.LearningResources with {
             Label         : '{i18n>DifficultyLevel1}',
         },
         Common.ValueListWithFixedValues: true
-    );
-    Status          @(
-        Common.ValueList               : {
-            $Type         : 'Common.ValueListType',
-            CollectionPath: 'Status',
-            Parameters    : [
-                {
-                    $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: Status_code,
-                    ValueListProperty: 'code',
-                },
-                {
-                    $Type            : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty: 'descr',
-                },
-            ],
-            Label         : '{i18n>Status}',
-        },
-        Common.ValueListWithFixedValues: true,
-        Common.Text                    : {
-            $value                : Status.descr,
-            ![@UI.TextArrangement]: #TextFirst,
-        },
     );
     Category        @(
         Common.ValueList               : {

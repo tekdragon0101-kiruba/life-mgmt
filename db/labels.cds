@@ -12,7 +12,6 @@ annotate db.LearningResources with {
     Duration        @title: '{i18n>Duration}';
     Description     @title: '{i18n>Description}';
     DifficultyLevel @title: '{i18n>DifficultyLevel}';
-    Status          @title: '{i18n>Status}';
 };
 
 annotate db.Tasks with {
@@ -30,9 +29,17 @@ annotate db.Tasks with {
     TaskType          @title: '{i18n>TaskType}';
     Tags              @title: '{i18n>Tags}';
     CommentsNotes     @title: '{i18n>CommentsNotes}';
-    // parentTask        @title: '{i18n>parentTask}';
-    // subtasks          @title: '{i18n>subtasks}';
 };
+
+annotate db.Goals with {
+    ID          @title: '{i18n>ID}';
+    Title       @title: '{i18n>Title}';
+    Description @title: '{i18n>Description}';
+    TargetDate  @title: '{i18n>TargetDate}';
+    Progress    @title: '{i18n>Progress}';
+    Status      @title: '{i18n>Status}';
+};
+
 
 annotate db.Priority with {
     code  @title: '{i18n>code}';
@@ -59,10 +66,10 @@ annotate db.TagLabelResources with {
 };
 
 annotate db.TaskTypes with {
-    name @title: '{i18n>TypeName}';
-    descr    @title: '{i18n>descr}'
+    name  @title: '{i18n>TypeName}';
+    descr @title: '{i18n>descr}'
 };
 
 annotate db.DifficultyLevel with {
-    levelName @title : '{i18n>DifficultyLevel}'
+    levelName @title: '{i18n>DifficultyLevel}'
 };

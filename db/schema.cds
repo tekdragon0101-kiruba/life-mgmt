@@ -7,40 +7,51 @@ using {
 
 
 entity LearningResources : managed {
-    key ResourceID      : UUID; 
+    key ResourceID      : UUID;
         Title           : String(255)                     @mandatory;
         Category        : String(100);
         Subject         : String(1000)                    @UI.MultiLineText;
         AuthorSource    : String(255)                     @mandatory;
         PublicationDate : Date;
-        AccessLink      : String(500)                     @mandatory ;
+        AccessLink      : String(500)                     @mandatory;
         Format          : Association to Format           @assert.target; // Medium (e.g., PDF, online course, book)
-        Time            : Association to TimeUnits        @mandatory  @assert.target;
+        Time            : Association to TimeUnits        @mandatory  @assert.target: true;
         Duration        : Integer                         @mandatory;
         Description     : String                          @UI.MultiLineText;
-        DifficultyLevel : Association to DifficultyLevel  @mandatory  @assert.target;
-        Status          : Association to Status           @mandatory  @assert.target;
+        DifficultyLevel : Association to DifficultyLevel  @mandatory  @assert.target: true;
         Tags            : Composition of many TagLabelResources
                               on Tags.resource = $self; // Searchable terms
+        task            : Association to Tasks
+                              on task.resource = $self;
 }
 
 entity Tasks : managed {
     key TaskID            : UUID; // Unique identifier
-        Title             : String(255)              @mandatory; // Brief name of the task
-        Description       : String(1000)             @UI.MultiLineText; // Detailed task explanation
-        AssignedTo        : String(255)              @readonly  @cds.on.insert: $user; // Person or team responsible
-        PriorityLevel     : Association to Priority  @mandatory; // Low, Medium, High, Critical
+        Title             : String(255)               @mandatory; // Brief name of the task
+        Description       : String(1000)              @UI.MultiLineText; // Detailed task explanation
+        AssignedTo        : String(255)               @readonly   @cds.on.insert: $user; // Person or team responsible
+        PriorityLevel     : Association to Priority   @mandatory; // Low, Medium, High, Critical
         Status            : Association to Status; // Not Started, In Progress, Completed, On Hold, Overdue
-        StartDate         : DateTime default $now    @mandatory; // When the task begins
-        DueDate           : DateTime                 @mandatory; // Deadline for completion
+        StartDate         : DateTime default $now     @mandatory; // When the task begins
+        DueDate           : DateTime                  @mandatory; // Deadline for completion
         CompletionDate    : DateTime; // Date when finished
         EstimatedDuration : Integer; // Expected time (in hours or days)
         ActualDuration    : Integer; // Time actually spent
-        TaskType          : Association to TaskTypes @mandatory; // Categorization (Development, Research, Review)
+        TaskType          : Association to TaskTypes  @mandatory  @assert.target: true; // Categorization (Development, Research, Review)
         Tags              : Composition of many TagLabelTasks
                                 on Tags.task = $self;
-        CommentsNotes     : String(5000)             @UI.MultiLineText;
+        CommentsNotes     : String(5000)              @UI.MultiLineText;
         resource          : Association to LearningResources;
+        goal              : Association to Goals      @mandatory  @assert.target: true;
+};
+
+entity Goals {
+    ID          : UUID; // Unique identifier
+    Title       : String(255); // Goal name
+    Description : String(1000); // Detailed explanation
+    TargetDate  : Date; // When the goal should be achieved
+    Progress    : Decimal(5, 2); // Percentage completion
+    Status      : Association to Status; // Not Started, In Progress, Achieved
 }
 
 
