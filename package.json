@@ -10,11 +10,13 @@
     "@sap-cloud-sdk/http-client": "^3",
     "@sap-cloud-sdk/resilience": "^3.26.4",
     "@sap/cds": "^8",
-    "express": "^4"
+    "express": "^4",
+    "@sap/xssec": "^4"
   },
   "devDependencies": {
     "@cap-js/cds-types": "^0.10.0",
-    "@cap-js/sqlite": "^1"
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^8"
   },
   "scripts": {
     "start": "cds-serve",
@@ -37,6 +39,20 @@
             }
           }
         }
+      }
+    },
+    "[hybrid]": {
+      "requires": {
+        "db": {
+          "kind": "hana"
+        },
+        "auth": "dummy"
+      }
+    },
+    "[production]": {
+      "requires": {
+        "auth": "xsuaa",
+        "db": "hana"
       }
     },
     "requires": {
