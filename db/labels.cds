@@ -37,6 +37,7 @@ annotate db.Goals with {
     Description @title: '{i18n>Description}';
     TargetDate  @title: '{i18n>TargetDate}';
     Progress    @title: '{i18n>Progress}';
+    relatedTo @title : '{i18n>GoalRelatedTo}';
     Status      @title: '{i18n>Status}';
 };
 
@@ -65,7 +66,7 @@ annotate db.TagLabelResources with {
 
 };
 
-annotate db.TaskTypes with {
+annotate db.Types with {
     name  @title: '{i18n>TypeName}';
     descr @title: '{i18n>descr}'
 };

@@ -27,28 +27,28 @@ entity LearningResources : managed {
 
 entity Tasks : managed {
     key TaskID            : UUID; // Unique identifier
-        Title             : String(255)               @mandatory; // Brief name of the task
-        Description       : String(1000)              @UI.MultiLineText; // Detailed task explanation
-        AssignedTo        : String(255)               @readonly   @cds.on.insert: $user; // Person or team responsible
-        PriorityLevel     : Association to Priority   @mandatory; // Low, Medium, High, Critical
+        Title             : String(255)             @mandatory; // Brief name of the task
+        Description       : String(1000)            @UI.MultiLineText; // Detailed task explanation
+        AssignedTo        : String(255)             @readonly   @cds.on.insert: $user; // Person or team responsible
+        PriorityLevel     : Association to Priority @mandatory; // Low, Medium, High, Critical
         Status            : Association to Status; // Not Started, In Progress, Completed, On Hold, Overdue
-        StartDate         : DateTime default $now     @mandatory; // When the task begins
-        DueDate           : DateTime                  @mandatory; // Deadline for completion
+        StartDate         : DateTime default $now   @mandatory; // When the task begins
+        DueDate           : DateTime                @mandatory; // Deadline for completion
         CompletionDate    : DateTime; // Date when finished
         EstimatedDuration : Integer; // Expected time (in hours or days)
         ActualDuration    : Integer; // Time actually spent
-        TaskType          : Association to TaskTypes  @mandatory  @assert.target: true; // Categorization (Development, Research, Review)
+        TaskType          : Association to Types    @mandatory  @assert.target: true; // Categorization (Development, Research, Review)
         Tags              : Composition of many TagLabelTasks
                                 on Tags.task = $self;
-        CommentsNotes     : String(5000)              @UI.MultiLineText;
+        CommentsNotes     : String(5000)            @UI.MultiLineText;
         resource          : Association to LearningResources;
-        goal              : Association to Goals      @mandatory  @assert.target: true;
+        goal              : Association to Goals    @mandatory  @assert.target: true;
 };
 
-entity Goals {
-    ID          : UUID; // Unique identifier
+entity Goals : cuid {
     Title       : String(255); // Goal name
-    Description : String(1000); // Detailed explanation
+    relatedTo   : Association to Types;
+    Description : String(1000) @UI.MultiLineText;// Detailed explanation
     TargetDate  : Date; // When the goal should be achieved
     Progress    : Decimal(5, 2); // Percentage completion
     Status      : Association to Status; // Not Started, In Progress, Achieved
@@ -91,7 +91,7 @@ entity DifficultyLevel {
 
 @cds.odata.valuelist
 @cds.autoexpose
-entity TaskTypes {
+entity Types {
     key name  : String(50);
         descr : String(500);
 }
