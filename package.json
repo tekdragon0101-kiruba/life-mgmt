@@ -16,13 +16,19 @@
   "devDependencies": {
     "@cap-js/cds-types": "^0.10.0",
     "@cap-js/sqlite": "^1",
-    "@sap/cds-dk": "^8"
+    "@sap/cds-dk": "^8",
+    "rimraf": "^5.0.5",
+    "mbt": "^1.2.29"
   },
   "scripts": {
     "start": "cds-serve",
     "dev-mock": "cds watch --profile dev",
     "watch-tasks": "cds watch --open tasks/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-resources": "cds watch --open resources/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-resources": "cds watch --open resources/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-goals": "cds watch --open goals/webapp/index.html?sap-ui-xx-viewCache=false",
+    "undeploy": "cf undeploy life-mgmt --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
   "cds": {
     "[dev]": {
@@ -71,6 +77,7 @@
   },
   "sapux": [
     "app/tasks",
-    "app/resources"
+    "app/resources",
+    "app/goals"
   ]
 }

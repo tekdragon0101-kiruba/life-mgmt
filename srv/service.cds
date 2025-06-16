@@ -114,13 +114,16 @@ service LifeMgmtService {
     entity ResourceTags      as projection on db.TagLabelResources;
     entity Status            as projection on db.Status;
 
+    @odata.draft.enabled
+    entity Goals             as projection on db.Goals;
+
     entity Categories        as
         projection on external.Categories {
             ID,
             Name,
             Description
         };
-
+    
 }
 
 annotate LifeMgmtService with @protocol: [{
