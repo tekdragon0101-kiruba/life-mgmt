@@ -151,5 +151,12 @@
   "sap.fiori": {
     "registrationIds": [],
     "archeType": "transactional"
+  },
+  "sap.fe": {
+    "app": {
+      "hideDraft": {
+        "enabled": true
+      }
+    }
   }
 }

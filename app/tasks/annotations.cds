@@ -76,7 +76,11 @@ annotate service.Tasks with @(
             {Value: EstimatedDuration, },
             {Value: ActualDuration, },
             {Value: TaskType_name, },
-            {Value: Tags.name}
+            {Value: Tags.name},
+            {
+                Value: goal_ID,
+                Label: '{i18n>ID}'
+            }
         ],
     },
     UI.FieldGroup #Comment       : {
@@ -157,4 +161,26 @@ annotate service.Tasks with {
         },
     );
     TaskType @Common: {ValueListWithFixedValues: true, }
+};
+
+annotate service.Tasks with {
+    goal @Common: {
+        ValueList      : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Goals',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: goal_ID,
+                    ValueListProperty: 'ID',
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'Title',
+                },
+            ],
+        },
+        Text           : goal.Title,
+        TextArrangement: #TextFirst,
+    }
 };
